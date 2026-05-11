@@ -1,0 +1,46 @@
+.footer {
+  width: 100%;
+  height: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #1B1843;
+;
+}
+
+.footerLeft a {
+  text-decoration: none;
+  color: #1B1843;
+}
+
+.footerLeft a:hover {
+  opacity: 0.7;
+}
+
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #1B1843;
+}
+
+.footerRight a {
+  color: #1B1843;
+  text-decoration: none;
+}
+
+.footerRight a:hover {
+  opacity: 0.7;
+}

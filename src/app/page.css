@@ -1,0 +1,250 @@
+/* Conteneur principal */
+.container {
+  width: 95vw;
+  height: 95vh;
+  background: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  backdrop-filter: blur(80px) brightness(1.1);
+  -webkit-backdrop-filter: blur(80px) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+/* Zone 3 colonnes */
+.mainZone {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+ padding: 0 40px 0 80px;
+
+  box-sizing: border-box;
+  margin-top: 0;
+}
+
+/* GAUCHE */
+.leftCol {
+  width: 380px;
+  height: 471px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+.colorTitle {
+  width: 284px;
+  height: 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e3a5f;
+}
+
+.swatches {
+  display: flex;
+  gap: 12px;
+}
+
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* CENTRE */
+.centerCol {
+  width: 485px;
+  height: 471px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 45px;
+  padding-bottom: 55px;
+  box-sizing: border-box;
+  margin-right: 30px;
+}
+
+.commanderBtn {
+  background-color: #F9C464;
+  color: #1B1843;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 48px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Quicksand', sans-serif;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.commanderBtn:hover {
+  opacity: 0.9;
+}
+
+/* DROITE */
+.rightCol {
+  width: 380px;
+  height: 471px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.productCard {
+  width: 340px;
+  height: 369px;
+  backdrop-filter: blur(16px);
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.productName {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 24px;
+  color: #1B1843;
+;
+  margin: 0;
+}
+
+.productRating {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #e6a817;
+  margin: 0;
+}
+
+.productDesc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #1B1843;
+
+  line-height: 1.6;
+  margin: 0;
+}
+
+.productDivider {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.productFeature {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1B1843;
+  margin: 0;
+  cursor: pointer;
+}
+
+.productFeature:first-of-type {
+  margin-top: 20px;
+}
+.productPrice {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1B1843;
+  margin-top: 20px;
+ 
+}
+@media (max-width: 1024px) {
+  .desktopOnly { display: none !important; }
+  .tabletOnly  { display: flex !important; flex-direction: column; }
+
+  .container {
+    width: 90%;
+    height: 90vh;
+    border-radius: 25px;
+    padding: 20px;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+  .mainZone.tabletOnly {
+    width: 100%;
+    flex: 1;
+    flex-direction: column !important;
+    align-items: center;
+    gap: 30px;
+    padding: 0;
+  }
+
+  .topZone {
+    width: 100%;
+    height: 214px;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px;
+  }
+
+  .hatZone {
+    width: 50%;
+    height: 214px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .commanderTablet {
+    width: 50% !important;
+    height: 214px !important;
+    border-radius: 25px !important;
+    padding: 0 !important;
+    font-size: 16px;
+  }
+
+  .bottomZone {
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 30px;
+    align-items: flex-start;
+  }
+
+  .leftColTablet {
+    width: 50%;
+    height: 101px;
+    border-radius: 25px;
+    backdrop-filter: blur(16px);
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 16px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .productCardTablet {
+    width: 50% !important;
+    height: 301px !important;
+    border-radius: 24px !important;
+    padding: 15px !important;
+    gap: 15px !important;
+    box-sizing: border-box;
+  }
+}

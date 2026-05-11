@@ -1,0 +1,101 @@
+.contactZone {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.contactInner {
+  width: 100%;
+  height: 471px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+}
+
+.contactBloc {
+  width: 567px;
+  height: 426px;
+  backdrop-filter: blur(20px) brightness(1.1);
+  -webkit-backdrop-filter: blur(20px) brightness(1.1);
+  background: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 24px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-shrink: 0;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.contactTitre {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin: 0;
+}
+
+.contactInput {
+  width: 487px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #1e3a5f;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.contactInput::placeholder {
+  color: rgba(30, 58, 95, 0.5);
+}
+
+.contactInput:focus {
+  border-color: rgba(30, 58, 95, 0.4);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.contactTextarea {
+  width: 487px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #1e3a5f;
+  outline: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.contactTextarea::placeholder {
+  color: rgba(30, 58, 95, 0.5);
+}
+
+.contactImage {
+  width: 456px;
+  height: 431px;
+  border-radius: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}

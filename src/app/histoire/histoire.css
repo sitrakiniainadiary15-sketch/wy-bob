@@ -1,0 +1,72 @@
+/* Zone principale */
+.histoireZone {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 5%;
+  padding: 30px 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: calc(100% - 41px);
+}
+
+
+/* Bloc texte gauche */
+.histoireBloc {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px;
+  box-sizing: border-box;
+  backdrop-filter: blur(16px);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  max-height: 60vh;
+}
+
+
+/* Titre */
+.histoireTitre {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin-bottom: 24px;
+}
+
+/* Div texte */
+.histoireTexte {
+  flex: 1;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.histoireTexte::-webkit-scrollbar {
+  display: none;
+}
+
+.histoireTexte p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Image droite */
+.histoireImage {
+  width: 35%;
+  max-height: 60vh;
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
