@@ -8,7 +8,7 @@ import './Navbar.css'
 const links = [
   { label: 'Home', href: '/' },
   { label: 'Notre Histoire', href: '/histoire' },
-  { label: 'Le concept', href: '/concept' },
+ 
   { label: 'Gallerie', href: '/galerie' },
   { label: 'Contacts', href: '/contact' },
 ]
