@@ -1,14 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { useCart } from '@/components/panier-context'
 import './page.css'
 
-/* ===== DONNÉES DU PRODUIT ===== */
 const product = {
   name: "WYBOB Essentials",
   price: 85,
@@ -16,17 +14,17 @@ const product = {
   reviews: 12,
   description: "Pensé pour les journées lumineuses et les escapades d'été, le WYBOB Soleil apporte une élégance naturelle à toutes vos silhouettes.",
   colors: [
-    { id: 1, name: "Vert",   code: "#2d5a27", image: "/images/hat-vert.png"   },
-    { id: 2, name: "Blanc",  code: "#f5f5f0", image: "/images/Blanc.png"      },
-    { id: 3, name: "Jaune",  code: "#e6a817", image: "/images/hat-jaune.png"  },
-    { id: 4, name: "Marron", code: "#8B4513", image: "/images/hat-marron.png" },
+    { id: 1, name: "Bleu",   code: "#1a4fa0", image: "/images/wybob_bleu.webp"  },
+    { id: 2, name: "Blanc",  code: "#f5f5f0", image: "/images/wybob_blanc.webp" },
+    { id: 3, name: "Jaune",  code: "#e6a817", image: "/images/wybob_jaune.webp" },
+    { id: 4, name: "Rouge",  code: "#c0392b", image: "/images/wybob_rouge.webp" },
   ]
 }
 
 export default function Home() {
-  const [selectedColor, setSelectedColor] = useState(2)
-  const [hatImage, setHatImage] = useState('/images/Blanc.png')
-  const [selectedColorName, setSelectedColorName] = useState('Blanc')
+  const [selectedColor, setSelectedColor] = useState(product.colors[0].id)
+  const [hatImage, setHatImage] = useState(product.colors[0].image)
+  const [selectedColorName, setSelectedColorName] = useState(product.colors[0].name)
   const { addToCart } = useCart()
   const router = useRouter()
 
@@ -70,13 +68,17 @@ export default function Home() {
 
         {/* CENTRE */}
         <div className="centerCol">
-          <Image
-            src={hatImage}
-            alt="Chapeau WYBOB"
-            width={485}
-            height={250}
-            style={{ objectFit: 'contain' }}
-          />
+         <img
+  src={hatImage}
+  alt="Chapeau WYBOB"
+  style={{ 
+    objectFit: 'contain', 
+    width: '600px', 
+    height: '400px',
+    display: 'block',
+    marginTop: '-80px'
+  }}
+/>
           <button className="commanderBtn" onClick={handleCommander}>
             COMMANDER
           </button>

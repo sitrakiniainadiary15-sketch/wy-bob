@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { connectDB } from "@/lib/db";
-import User from "@/models/User";
+import { connectDB } from "@/app/lib/db";
+import User from "@/app/models/User";
 import bcrypt from "bcryptjs";
 
 export const authOptions = {
@@ -57,14 +57,19 @@ export const authOptions = {
   ],
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
+        token.id = user.id;
         token.role = user.role;
         token.emailVerified = user.emailVerified;
+      }
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
       }
       return token;
     },
     async session({ session, token }) {
+      session.user.id = token.id ?? token.sub;
       session.user.role = token.role;
       session.user.emailVerified = token.emailVerified;
       return session;

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { useCart } from "@/components/panier-context";
 import "./checkout.css";
@@ -10,11 +11,12 @@ export default function CheckoutForm({ total }: { total: number }) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const { data: session } = useSession();
   const { cartItems, cartTotal } = useCart();
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(session?.user?.email ?? "");
   const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
   const [address, setAddress] = useState("");
@@ -30,61 +32,80 @@ export default function CheckoutForm({ total }: { total: number }) {
   const totalQty = cartItems.reduce((acc, i) => acc + i.quantity, 0);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!firstname || !lastname || !email || !city || !address) {
-      alert("Veuillez remplir tous les champs obligatoires");
-      return;
-    }
-    if (!cartItems || cartItems.length === 0) {
-      alert("Votre panier est vide");
-      return;
-    }
-    if (!stripe || !elements) return;
-    setLoading(true);
-    try {
-      const res = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: total }),
-      });
-      const { clientSecret } = await res.json();
-      const { error: stripeError } = await stripe.confirmPayment({
-        elements,
-        clientSecret,
-        confirmParams: { return_url: `${window.location.origin}/checkout/success` },
-        redirect: "if_required",
-      });
-      if (stripeError) {
-        alert(stripeError.message);
-        return;
-      }
-      const orderRes = await fetch("/api/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customer: { firstname, lastname, email, phone, company, city, address, postalCode, country },
-          cartItems,
-          total: cartTotal,
-          payment: "card",
-          delivery: shipping,
-        }),
-      });
-      const orderData = await orderRes.json();
-      if (!orderRes.ok) {
-        alert(orderData.message || "Erreur lors de la commande");
-        return;
-      }
-      alert("✅ Commande confirmée !");
-      localStorage.removeItem("cart");
-      router.push("/");
-    } catch (error) {
-      console.error("CHECKOUT ERROR:", error);
-      alert("Erreur serveur");
-    } finally {
-      setLoading(false);
-    }
-  };
+  e.preventDefault();
 
+  if (!firstname || !lastname || !email || !city || !address) {
+    alert("Veuillez remplir tous les champs obligatoires");
+    return;
+  }
+  if (!cartItems || cartItems.length === 0) {
+    alert("Votre panier est vide");
+    return;
+  }
+  if (!stripe || !elements) return;
+
+  setLoading(true);
+
+  try {
+    // ✅ 1 — Soumettre les éléments Stripe d'abord
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      alert(submitError.message);
+      setLoading(false);
+      return;
+    }
+
+    // 2 — Créer le payment intent
+    const res = await fetch("/api/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: total }),
+    });
+    const { clientSecret } = await res.json();
+
+    // 3 — Confirmer le paiement
+    const { error: stripeError } = await stripe.confirmPayment({
+      elements,
+      clientSecret,
+      confirmParams: { return_url: `${window.location.origin}/checkout/success` },
+      redirect: "if_required",
+    });
+
+    if (stripeError) {
+      alert(stripeError.message);
+      return;
+    }
+
+    // 4 — Créer la commande
+    const orderRes = await fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customer: { firstname, lastname, email, phone, company, city, address, postalCode, country },
+        cartItems,
+        total: cartTotal,
+        payment: "card",
+        delivery: shipping,
+      }),
+    });
+
+    const orderData = await orderRes.json();
+    if (!orderRes.ok) {
+      alert(orderData.message || "Erreur lors de la commande");
+      return;
+    }
+
+    alert("✅ Commande confirmée !");
+    localStorage.removeItem("cart");
+    router.push("/");
+
+  } catch (error) {
+    console.error("CHECKOUT ERROR:", error);
+    alert("Erreur serveur");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <>
       <button className="checkout-back" onClick={() => router.back()}>

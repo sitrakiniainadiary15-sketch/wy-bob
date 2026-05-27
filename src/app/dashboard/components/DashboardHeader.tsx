@@ -1,0 +1,47 @@
+'use client'
+import Link from 'next/link'
+import Image from 'next/image'
+import { signOut } from 'next-auth/react'
+
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'Notre Histoire', href: '/histoire' },
+  { label: 'Gallerie', href: '/galerie' },
+  { label: 'Contacts', href: '/contact' },
+]
+
+export default function DashboardHeader({ showLogout = false }: { showLogout?: boolean }) {
+  return (
+    <header className="db-header">
+      <Link href="/" className="db-header-logo">
+        <Image
+          src="/images/logo.png"
+          alt="WYBOB Logo"
+          width={38}
+          height={38}
+          style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
+        />
+      </Link>
+      <nav className="db-header-links">
+        {links.map(link => (
+          <Link key={link.href} href={link.href} className="db-header-link">
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+      {showLogout && (
+        <button
+          className="db-header-logout"
+          onClick={() => signOut({ callbackUrl: '/auth/login' })}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Déconnexion
+        </button>
+      )}
+    </header>
+  )
+}

@@ -117,7 +117,7 @@ export default function Panier() {
               </div>
               <button
                 className="checkout-btn"
-                onClick={() => router.push("/commande")}
+               onClick={() => router.push("/checkout")}
               >
                 Procéder au paiement
               </button>

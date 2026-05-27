@@ -2,6 +2,8 @@
 
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { connectDB } from "@/app/lib/db";
 import Order from "@/app/models/Order";
 import { sendEmail } from "@/app/lib/mailer";
@@ -9,9 +11,11 @@ import Customer from "@/app/models/Customer";
 
 export async function POST(req) {
   console.log("🚀 API /api/order APPELÉE");
-  
+
   try {
     await connectDB();
+
+    const session = await getServerSession(authOptions);
 
     const body = await req.json();
     const { customer, cartItems, total, payment, delivery } = body;
@@ -20,7 +24,9 @@ export async function POST(req) {
       return NextResponse.json({ message: "Client manquant" }, { status: 400 });
     }
 
-    const { firstname, lastname, email, city, address, phone } = customer;
+    const { firstname, lastname, city, address, phone } = customer;
+    // Si l'utilisateur est connecté, on force son email de compte pour la correspondance dashboard
+    const email = session?.user?.email ?? customer.email;
 
     if (!firstname || !lastname || !email || !city || !address) {
       return NextResponse.json({ message: "Informations client manquantes" }, { status: 400 });
@@ -36,20 +42,26 @@ export async function POST(req) {
     }
 
     const products = cartItems.map((item) => {
-      if (!mongoose.Types.ObjectId.isValid(item._id)) {
-        throw new Error("ID produit invalide");
-      }
-      return {
-        product: new mongoose.Types.ObjectId(item._id),
-        quantity: Number(item.quantity) || 1,
-      };
-    });
+  if (mongoose.Types.ObjectId.isValid(item._id)) {
+    return {
+      product: new mongoose.Types.ObjectId(item._id),
+      quantity: Number(item.quantity) || 1,
+    };
+  }
+
+  return {
+    product: new mongoose.Types.ObjectId(),
+    quantity: Number(item.quantity) || 1,
+  };
+});
+  
 
     const order = await Order.create({
+      userId: session?.user?.id ?? null,
       customer: {
         firstname,
         lastname,
-        email,
+        email: email.toLowerCase(),
         phone: phone || "",
         city,
         address,
@@ -57,7 +69,7 @@ export async function POST(req) {
       products,
       total: Number(total),
       payment: payment || "cash",
-      delivery: delivery || "colissimo",  // ✅ corrigé
+      delivery: delivery || "colissimo",
       status: "pending",
     });
 

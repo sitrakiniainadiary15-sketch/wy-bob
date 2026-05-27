@@ -1,6 +1,6 @@
 "use client";
 import { signIn, getSession, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -15,14 +15,16 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/dashboard";
   const { data: session } = useSession();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (session) {
-      router.push(session.user?.role === "admin" ? "/admin" : "/dashboard");
+    if (session?.user && !loading) {
+      router.push(session.user?.role === "admin" ? "/admin" : redirectTo);
     }
-  }, [session, router]);
+  }, [session, router, loading]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -39,6 +41,11 @@ export default function LoginPage() {
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (!email || !password) {
+      setError("Veuillez remplir tous les champs");
+      return;
+    }
 
     if (!validateEmail(email)) {
       setError("Adresse e-mail invalide");
@@ -60,7 +67,7 @@ export default function LoginPage() {
     }
 
     const updatedSession = await getSession();
-    router.push(updatedSession?.user?.role === "admin" ? "/admin" : "/dashboard");
+    router.push(updatedSession?.user?.role === "admin" ? "/admin" : redirectTo);
   }
 
   return (
@@ -70,64 +77,58 @@ export default function LoginPage() {
       <div className="loginZone">
         <div className="login-card" ref={menuRef}>
 
-          <div className="login-inputs">
-            <div className="login-field">
-              <label>Adresse e-mail</label>
-              <div className="login-input-wrap">
-                <span>@</span>
-                <input
-                  type="email"
-                  placeholder="Tom.exemple@gmail.com"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  autoComplete="off"
-                  required
-                />
+          <form onSubmit={handleLogin}>
+            <div className="login-inputs">
+              <div className="login-field">
+                <label>Adresse e-mail</label>
+                <div className="login-input-wrap">
+                  <span>@</span>
+                  <input
+                    type="email"
+                    placeholder="Tom.exemple@gmail.com"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    autoComplete="off"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="login-field">
+                <label>Mot de passe</label>
+                <div className="login-input-wrap">
+                  <span>🔒</span>
+                  <input
+                    type={showPwd ? "text" : "password"}
+                    placeholder="••••••••••••"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                  />
+                  <button type="button" onClick={() => setShowPwd(!showPwd)}>
+                    {showPwd ? "🙈" : "👁"}
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="login-field">
-              <label>Mot de passe</label>
-              <div className="login-input-wrap">
-                <span>🔒</span>
-                <input
-                  type={showPwd ? "text" : "password"}
-                  placeholder="••••••••••••"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                />
-                <button type="button" onClick={() => setShowPwd(!showPwd)}>
-                  {showPwd ? "🙈" : "👁"}
-                </button>
+            <div className="login-actions">
+              <div className="login-options">
+                <label><input type="checkbox" /> Se souvenir de moi</label>
+                <Link href="/auth/forgot-password">Mot de passe oublié</Link>
               </div>
+
+              {error && <p className="login-error">{error}</p>}
+
+              <button
+                type="submit"
+                className="login-btn"
+                disabled={loading || !email || !password}
+              >
+                {loading ? "Connexion..." : "Se connecter"}
+              </button>
             </div>
-          </div>
-
-          <div className="login-actions">
-            <div className="login-options">
-              <label><input type="checkbox" /> Se souvenir de moi</label>
-              <Link href="/auth/forgot-password">Mot de passe oublié</Link>
-            </div>
-
-            {error && <p className="login-error">{error}</p>}
-
-            <button className="login-btn" onClick={handleLogin} disabled={loading}>
-              {loading ? "Connexion..." : "Se connecter"}
-            </button>
-
-            {false && (
-              <>
-                <div className="login-divider">
-                  <span /><p>Ou continuer avec</p><span />
-                </div>
-                <div className="login-social">
-                  <button onClick={() => signIn("google")}>Google</button>
-                  <button onClick={() => signIn("facebook")}>Facebook</button>
-                </div>
-              </>
-            )}
-          </div>
+          </form>
 
           <div className="login-footer">
             <p>Pas encore de compte ?</p>

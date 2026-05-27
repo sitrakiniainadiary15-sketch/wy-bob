@@ -31,8 +31,8 @@
 /* GAUCHE */
 .cart-left {
   flex: 1;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
+   background: rgba(255,255,255,0.6); /* ✅ était 0.2 */
+  border: 1px solid rgba(255,255,255,0.8); /* ✅ était 0.4 */
   border-radius: 10px;
   padding: 20px 20px;
   display: flex;
@@ -128,15 +128,17 @@ width: 300px;
 .cart-section-title { font-size: 14px; font-weight: 600; color: #1B1843; margin: 0 0 16px 0; display: flex; align-items: center; gap: 6px; }
 
 /* PROMO */
-.cart-promo { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 20px; }
+.cart-promo {background: rgba(255,255,255,0.6); /* ✅ était 0.2 */
+  border: 1px solid rgba(255,255,255,0.8); /* ✅ était 0.4 */; border-radius: 10px; padding: 20px; }
 .promo-input-row { display: flex; gap: 8px; }
 .promo-input-row input { flex: 1; padding: 10px 14px; border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; font-size: 13px; outline: none; background: rgba(255,255,255,0.5); }
 .promo-input-row input:focus { border-color: #1B1843; }
-.promo-input-row button { padding: 10px 1àpx; background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; font-size: 1épx; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.promo-input-row button { padding: 10px 1àpx; background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
 .promo-input-row button:hover { background: rgba(255,255,255,0.8); }
 
 /* RÉSUMÉ */
-.cart-summary { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; }
+.cart-summary {  background: rgba(255,255,255,0.6); /* ✅ était 0.2 */
+  border: 1px solid rgba(255,255,255,0.8); /* ✅ était 0.4 */ border-radius: 10px; padding: 20px; display: flex; flex-direction: column; }
 .cart-summary .cart-section-title { margin-bottom: 20px; }
 .summary-row { display: flex; justify-content: space-between; font-size: 14px; color: #1B1843; margin-bottom: 12px; }
 .summary-divider { border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 8px 0 12px 0; }

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const OrderSchema = new mongoose.Schema(
   {
+    userId: { type: String, default: null },
     customer: {
       firstname: String,
       lastname: String,
@@ -26,6 +27,11 @@ const OrderSchema = new mongoose.Schema(
       enum: ["cash", "mobile_money", "card", "bank_transfer"],
       default: "cash",
     },
+    delivery: {
+  type: String,
+  enum: ['standard', 'express', 'pickup', 'colissimo', 'relais'],
+  default: 'colissimo',
+},
     status: {
       type: String,
       enum: ["pending", "confirmed", "processing", "paid", "shipped", "delivered", "cancelled"],

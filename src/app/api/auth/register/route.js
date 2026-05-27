@@ -1,10 +1,9 @@
-import { connectDB } from "@/lib/db";
-import User from "@/models/User";
+import { connectDB } from "@/app/lib/db";
+import User from "@/app/models/User";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { sendEmail } from "@/lib/mailer";
-import { getVerificationEmailTemplate } from "@/lib/emailTemplates";
-
+import { sendEmail } from "@/app/lib/mailer";
+import { getVerificationEmailTemplate } from "@/app/lib/emailTemplates";
 /* ===== RATE LIMITING ===== */
 const registrationAttempts = new Map();
 

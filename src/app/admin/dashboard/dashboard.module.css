@@ -1,0 +1,75 @@
+/* =============================================
+   Admin — Dashboard
+   Palette : #F9C464 | #1B1843 | #f5f5f4
+   ============================================= */
+
+.container {
+  background: #f5f5f4;
+  padding: 24px 36px;
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+}
+
+/* ── Topbar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1B1843;
+  letter-spacing: -0.5px;
+  flex: 1;
+  margin: 0;
+}
+
+/* ── Navigation grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1.5px solid #e7e5e4;
+  border-radius: 12px;
+  color: #1B1843;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.card:hover {
+  background: #1B1843;
+  color: #fff;
+  border-color: #1B1843;
+  box-shadow: 0 4px 12px rgba(27, 24, 67, 0.15);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .container { padding: 16px; }
+  .title     { font-size: 20px; }
+}
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}

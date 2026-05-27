@@ -1,0 +1,222 @@
+.container {
+  background: #f5f5f4;
+  padding: 24px 36px;
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+}
+
+/* ── Bouton retour ── */
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1B1843;
+  text-decoration: none;
+  background: #fff;
+  border: 1.5px solid #e7e5e4;
+  border-radius: 6px;
+  padding: 6px 14px;
+  margin-bottom: 16px;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.backBtn:hover {
+  background: #1B1843;
+  color: #fff;
+  border-color: #1B1843;
+}
+
+/* ── En-tête page ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1B1843;
+  margin: 0;
+}
+
+/* ── Bannière alerte rupture ── */
+.alertBanner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.alertDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  flex-shrink: 0;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ── Grille produits ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ── Carte produit ── */
+.card {
+  background: #fff;
+  border: 1.5px solid #e7e5e4;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: box-shadow 0.15s;
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+.cardEmpty {
+  border-color: #fca5a5;
+}
+
+/* ── Bannière rupture sur la carte ── */
+.ruptureBanner {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  background: #f9f9f9;
+  padding: 14px;
+}
+
+.info {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.color {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1B1843;
+  margin: 0;
+}
+
+.price {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+/* ── Badge statut ── */
+.stockBadge {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ok    { background: #f0fdf4; color: #166534; }
+.low   { background: #fffbf0; color: #7c5200; }
+.empty { background: #fef2f2; color: #b91c1c; }
+
+/* ── Contrôles stock ── */
+.stockControls {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 4px;
+  border: 1.5px solid #e7e5e4;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 36px;
+}
+
+.stockBtn {
+  width: 36px;
+  height: 36px;
+  background: #f5f5f4;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1B1843;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.stockBtn:hover:not(:disabled) {
+  background: #1B1843;
+  color: #fff;
+}
+
+.stockBtnAdd:hover:not(:disabled) {
+  background: #166534;
+  color: #fff;
+}
+
+.stockBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.stockQty {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1B1843;
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  border-left: 1.5px solid #e7e5e4;
+  border-right: 1.5px solid #e7e5e4;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .container { padding: 16px; }
+}
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
